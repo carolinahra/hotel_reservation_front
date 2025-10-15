@@ -1,0 +1,27 @@
+{
+  "name": "hotel-reservation-front",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3",
+    "vit": "^0.0.1",
+    "vite": "^7.1.9",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "save-dev": "^0.0.1-security"
+  }
+}
