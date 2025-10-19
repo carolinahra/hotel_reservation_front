@@ -17,7 +17,10 @@
     "allowJs": false,
     "paths": {
       "@guest/*": ["src/modules/guest/*"],
-      "@shared/*": ["src/shared/*"]
+      "@shared/*": ["src/shared/*"],
+      "@room/*": ["src/modules/room/*"],
+      "@reservation/*": ["src/modules/reservation/*"],
+      "@extra-service/*": ["src/modules/extra-service/*"]
     }
   },
   "include": ["src/**/*"],

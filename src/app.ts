@@ -9,7 +9,7 @@ const container = new Container({
 const guestController = container.guestController;
 
 document.addEventListener("DOMContentLoaded", () => {
-  guestController.initTableWithEditButton();
+  guestController.initTableWithButtons();
   guestController.initInsertForm();
   guestController.initSubmitButton();
 });
