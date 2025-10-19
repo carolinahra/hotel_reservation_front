@@ -7,9 +7,11 @@ const container = new Container({
 });
 
 const guestController = container.guestController;
+const router = container.router;
 
 document.addEventListener("DOMContentLoaded", () => {
   guestController.initTableWithButtons();
   guestController.initInsertForm();
   guestController.initSubmitButton();
+  window.addEventListener('hashchange', () => router.handle());
 });
