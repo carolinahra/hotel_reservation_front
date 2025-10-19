@@ -1,5 +1,5 @@
 import { GuestService } from "@guest/services/guest.service";
-import { GuestView } from "@guest/views/guest.view";
+import { ButtonProps, GuestView } from "@guest/views/guest.view";
 
 export class GuestController {
   constructor(
@@ -17,17 +17,32 @@ export class GuestController {
     this.view.renderForm();
   }
 
-  public initTableWithEditButton() {
+  public initTableWithButtons() {
     this.guestService.get({ limit: 10, offset: 0 }).then((guests) => {
-      const tableWithEditButtonsProps = guests.map((guest) => {
+      const tableWithButtonsProps = guests.map((guest) => {
+        const buttonProps: ButtonProps[] = [
+          {
+            label: "Edit",
+            type: "button",
+            onClickEvent: () => {
+              this.view.renderForm(guest);
+            },
+          },
+          {
+            label: "Delete",
+            type: "button",
+            onClickEvent: () => {
+              this.guestService.delete({ email: guest.email });
+            },
+          },
+        ];
         return {
           row: guest,
-          event: () => {
-            this.view.renderForm(guest);
-          },
+          buttonProps,
         };
       });
-      this.view.renderTableWithEditButton(tableWithEditButtonsProps);
+
+      this.view.renderTableWithButtons(tableWithButtonsProps);
     });
   }
 

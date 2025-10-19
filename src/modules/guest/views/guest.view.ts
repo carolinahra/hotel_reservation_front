@@ -3,9 +3,15 @@ import { ButtonComponent } from "@shared/components/button.component";
 import { FormComponent } from "@shared/components/form.component";
 import { TableComponent } from "@shared/components/table.component";
 
-interface TableWithEditButtonProps {
+export interface ButtonProps {
+  label: string;
+  type: "button" | "submit" | "reset";
+  onClickEvent: () => any;
+}
+
+interface TableWithButtonProps {
   row: Guest;
-  event: () => void; // FIX
+  buttonProps: ButtonProps[];
 }
 export class GuestView {
   constructor(
@@ -24,20 +30,26 @@ export class GuestView {
     document.getElementById("guest-table").appendChild(table);
   }
 
-  public renderTableWithEditButton(props: TableWithEditButtonProps[]) {
-    const propsWithButton = props.map((prop) => {
-      const button = this.button.render({
-        label: "Edit",
-        type: "button",
-        onclickEvent: prop.event,
+  public renderTableWithButtons(props: TableWithButtonProps[]) {
+    const propsWithButtons = props.map((prop) => {
+      const buttons = prop.buttonProps.map((buttonProp) => {
+        return this.button.render({
+          type: buttonProp.type,
+          label: buttonProp.label,
+          onclickEvent: buttonProp.onClickEvent,
+        });
       });
       return {
         row: prop.row,
-        button: button,
+        buttons,
       };
     });
-    const table = this.table.render(propsWithButton);
-    document.getElementById("guest-table-with-edit-button").appendChild(table);
+    const table = this.table.render(propsWithButtons);
+    const docTable = document.getElementById("guest-table-with-buttons");
+    while (docTable.firstChild) {
+      docTable.removeChild(docTable.firstChild);
+    }
+    docTable.appendChild(table);
   }
 
   public renderForm(guest?: Guest) {
@@ -61,7 +73,11 @@ export class GuestView {
         value: guest?.phone ?? "",
       },
     ]);
-    document.getElementById("guest-form-container").appendChild(form);
+    const docForm = document.getElementById("guest-form-container");
+    while (docForm.firstChild) {
+      docForm.removeChild(docForm.firstChild);
+    }
+    docForm.appendChild(form);
   }
 
   public renderSubmitButton(event: () => void) {
