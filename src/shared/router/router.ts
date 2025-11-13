@@ -1,28 +1,40 @@
+import { ExtraServiceController } from "@extra-service/controllers/extra-service.controller";
 import { GuestController } from "@guest/controllers/guest.controller";
+import { ReservationDetailController } from "@reservation/controllers/reservation-detail.controller";
 import { ReservationController } from "@reservation/controllers/reservation.controller";
+import { RoomSizeController } from "@room/controllers/room-size.controlller";
 import { RoomController } from "@room/controllers/room.controller";
+import { Controller } from "@shared/controllers/controller";
 
-abstract class Controller {
-  // Move away from here
-  abstract init(): Promise<void> | void;
-}
-
-type Routes = {
+export type Routes = {
   [key: string]: Controller;
 };
 
-export const routes: Routes = {
-  guests: GuestController,
-  rooms: RoomController,
-  reservations: ReservationController,
-} as const;
 // The 'as const' assertion here ensures that the 'routes' object is treated as a constant type,
 // preventing any modifications to its structure or values.
 
 export class Router {
-  constructor(private routes: Routes) {}
+  private routes: Routes;
+  constructor(
+    private activeRoutes: string[],
+    private readonly roomController: RoomController,
+    private readonly guestController: GuestController,
+    private readonly roomSizeController: RoomSizeController,
+    private readonly reservationController: ReservationController,
+    private readonly reservationDetailController: ReservationDetailController,
+    private readonly extraServiceController: ExtraServiceController
+  ) {
+    this.routes = {
+      guests: this.guestController,
+      rooms: this.roomController,
+      roomSizes: this.roomSizeController,
+      reservations: this.reservationController,
+      reservationDetails: this.reservationDetailController,
+      extraServices: this.extraServiceController,
+    };
+  }
   handle() {
-    const path = window.location.pathname.slice(1); // Remove leading '/'
+    const path = window.location.hash.slice(2); // Remove leading '/'
 
     const controllerClass = this.routes[path];
 
@@ -33,5 +45,3 @@ export class Router {
     controllerClass.init();
   }
 }
-
-  

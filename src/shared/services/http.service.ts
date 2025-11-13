@@ -1,9 +1,15 @@
+import { Exception } from "@shared/exception";
+import { ExceptionService } from "./exception.service";
+
 export interface HTTPConfig {
   url: string;
 }
 
 export class HTTPService {
-  constructor(private config: HTTPConfig) {}
+  constructor(
+    private config: HTTPConfig,
+    private readonly exceptionService: ExceptionService
+  ) {}
   public get<Result>(
     path: string,
     params: Record<string, any>
@@ -11,9 +17,18 @@ export class HTTPService {
     const query = new URLSearchParams(params);
 
     return fetch(`${this.config.url}/${path}?${query}`, {})
-      .then((response) => response.json())
-      .catch((error) => {
-        throw new Error(error);
+      .then(async (response) => {
+        const body = await response.json();
+        if (!response.ok) {
+          throw new Exception({
+            httpCode: body.httpCode,
+            errorMessage: body.errorMessage,
+          });
+        }
+        return body;
+      })
+      .then((response) => {
+        return response;
       });
   }
 
@@ -28,10 +43,19 @@ export class HTTPService {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then((response) => response.json())
+      .then(async (response) => {
+        const body = await response.json();
+        if (!response.ok) {
+          throw new Exception({
+            httpCode: body.httpCode,
+            errorMessage: body.errorMessage,
+          });
+        }
+        return body;
+      })
       .catch((error) => {
         console.log(error);
-        throw new Error();
+        this.exceptionService.handle(error);
       });
   }
 
@@ -43,13 +67,13 @@ export class HTTPService {
       method: "PUT",
       body: JSON.stringify(params),
       headers: {
-        "Content-type": "application/json; charset=UTF8",
+        "Content-type": "application/json; charset=UTF-8",
       },
     })
       .then((response) => response.json())
       .catch((error) => {
         console.log(error);
-        throw new Error();
+        this.exceptionService.handle(error);
       });
   }
 
@@ -67,7 +91,7 @@ export class HTTPService {
       .then((response) => response.json())
       .catch((error) => {
         console.log(error);
-        throw new Error();
+        this.exceptionService.handle(error);
       });
   }
 }

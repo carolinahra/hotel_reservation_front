@@ -1,24 +1,21 @@
 import { ButtonProps } from "@guest/views/guest.view";
 import { ReservationService } from "@reservation/services/reservation.service";
 import { ReservationView } from "@reservation/views/reservation.view";
+import { Controller } from "@shared/controllers/controller";
 
-export class ReservationController {
+export class ReservationController extends Controller {
   constructor(
     private readonly view: ReservationView,
     private readonly reservationService: ReservationService
-  ) {}
-
-  public init() {
-    return this.reservationService
-      .get({ limit: 10, offset: 0 })
-      .then((reservations) => this.view.renderTable(reservations));
+  ) {
+    super();
   }
 
   public initInsertForm() {
     this.view.renderForm();
   }
 
-  public initTableWithButtons() {
+  public init() {
     this.reservationService
       .get({ limit: 10, offset: 0 })
       .then((reservations) => {
@@ -29,6 +26,19 @@ export class ReservationController {
               type: "button",
               onClickEvent: () => {
                 this.view.renderForm(reservation);
+                this.view.renderSubmitButton(() => {
+                  const inputs = this.view.readFormInputs();
+                  this.reservationService
+                    .update({
+                      id: reservation.id,
+                      externalReference: inputs.externalReference,
+                      totalPrice: inputs.totalPrice,
+                      paymentStatus: inputs.paymentStatus,
+                      checkInDate: inputs.checkInDate,
+                      checkOutDate: inputs.checkOutDate,
+                    })
+                    .then(() => this.init());
+                });
               },
             },
             {

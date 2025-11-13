@@ -4,14 +4,19 @@ const container = new Container({
   http: {
     url: "http://localhost:3000",
   },
+  routes: [
+    "guests",
+    "rooms",
+    "roomSizes",
+    "reservations",
+    "reservationDetails",
+    "extraServices",
+  ],
 });
 
 const guestController = container.guestController;
 const router = container.router;
 
 document.addEventListener("DOMContentLoaded", () => {
-  guestController.initTableWithButtons();
-  guestController.initInsertForm();
-  guestController.initSubmitButton();
-  window.addEventListener('hashchange', () => router.handle());
+  window.addEventListener("hashchange", () => router.handle());
 });

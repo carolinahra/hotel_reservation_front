@@ -1,0 +1,193 @@
+/* --- ESTILO GENERAL --- */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px;
+  background-color: #fafafa;
+  color: #333;
+}
+
+/* --- NAV --- */
+#nav {
+  background-color: #1976d2;
+  border-radius: 6px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+#nav li {
+  margin: 0;
+}
+
+#nav a {
+  display: block;
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+#nav a:hover {
+  background-color: #145ca1;
+}
+
+/* --- TABLAS --- */
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #1976d2;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.table button:hover {
+  background-color: #145ca1;
+}
+
+/* --- FORMULARIOS --- */
+form {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+
+form div {
+  margin-bottom: 10px;
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="number"] {
+  width: 250px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form input:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+
+form button,
+form input[type="submit"] {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+form button:hover,
+form input[type="submit"]:hover {
+  background-color: #145ca1;
+}
+
+/* --- MENSAJE DE ERROR --- */
+#error-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #f44336;
+  color: white;
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#error-container h1 {
+  font-size: 18px;
+  margin: 0 0 5px 0;
+}
+
+#error-container p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Animación sutil de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* --- BOTONES GENERALES (fuera de tablas o formularios) --- */
+button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin: 5px 5px 5px 0;
+}
+
+button:hover {
+  background-color: #145ca1;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  background-color: #b0bec5;
+  cursor: not-allowed;
+}

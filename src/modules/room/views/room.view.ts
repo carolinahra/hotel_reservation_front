@@ -27,7 +27,7 @@ export class RoomView {
       };
     });
     const table = this.table.render(tableProps);
-    document.getElementById("room-table").appendChild(table);
+    document.getElementById("app").appendChild(table);
   }
 
   public renderTableWithButtons(props: TableWithButtonProps[]) {
@@ -45,14 +45,15 @@ export class RoomView {
       };
     });
     const table = this.table.render(propsWithButtons);
-    const docTable = document.getElementById("room-table-with-buttons");
-    while (docTable.firstChild) {
-      docTable.removeChild(docTable.firstChild);
-    }
-    docTable.appendChild(table);
+    const div = document.getElementById("app");
+    div.appendChild(table);
   }
 
   public renderForm(room?: Room) {
+    if (document.getElementById("room-form")) {
+      const element = document.getElementById("room-form");
+      this.clean(element);
+    }
     const form = this.form.render([
       {
         fieldName: "Name",
@@ -79,11 +80,9 @@ export class RoomView {
         value: room?.availability ?? "",
       },
     ]);
-    const docForm = document.getElementById("room-form-container");
-    while (docForm.firstChild) {
-      docForm.removeChild(docForm.firstChild);
-    }
-    docForm.appendChild(form);
+    form.id = "room-form";
+    const div = document.getElementById("app");
+    div.appendChild(form);
   }
 
   public renderSubmitButton(event: () => void) {
@@ -92,23 +91,35 @@ export class RoomView {
       type: "submit",
       onclickEvent: event,
     });
-    document.getElementById("room-form-submit-button").appendChild(button);
+    document.getElementById("room-form").appendChild(button);
   }
 
   public readFormInputs() {
     const inputs = {
       name: (document.getElementById("room-name-field") as HTMLInputElement)
         .value,
-      roomSizeId: Number((
-        document.getElementById("room-room-size-id-field") as HTMLInputElement
-      ).value),
-      price: Number((document.getElementById("room-price-field") as HTMLInputElement)
-        .value),
+      roomSizeId: Number(
+        (document.getElementById("room-room-size-id-field") as HTMLInputElement)
+          .value
+      ),
+      price: Number(
+        (document.getElementById("room-price-field") as HTMLInputElement).value
+      ),
       availability: (
         document.getElementById("room-availability-field") as HTMLInputElement
       ).value,
     };
 
     return inputs;
+  }
+  public clean(element?: HTMLElement) {
+    const div = document.getElementById("app");
+    if (element) {
+      div.removeChild(element);
+      return;
+    }
+    while (div.firstChild) {
+      div.removeChild(div.firstChild);
+    }
   }
 }

@@ -1,50 +1,50 @@
 import { ButtonProps } from "@guest/views/guest.view";
 import { RoomService } from "@room/services/room.service";
 import { RoomView } from "@room/views/room.view";
+import { Controller } from "@shared/controllers/controller";
+import { ExceptionService } from "@shared/services/exception.service";
 
-export class RoomController {
+export class RoomController extends Controller {
   constructor(
     private readonly view: RoomView,
-    private readonly roomService: RoomService
-  ) {}
+    private readonly roomService: RoomService,
+    private readonly exceptionService: ExceptionService
+  ) {
+    super();
+  }
 
   public init() {
-    return this.roomService
+    this.roomService
       .get({ limit: 10, offset: 0 })
-      .then((rooms) => this.view.renderTable(rooms));
-  }
-
-  public initInsertForm() {
-    this.view.renderForm();
-  }
-
-  public initTableWithButtons() {
-    this.roomService.get({ limit: 10, offset: 0 }).then((rooms) => {
-      const tableWithButtonsProps = rooms.map((room) => {
-        const buttonProps: ButtonProps[] = [
-          {
-            label: "Edit",
-            type: "button",
-            onClickEvent: () => {
-              this.view.renderForm(room);
+      .then((rooms) => {
+        const tableWithButtonsProps = rooms.map((room) => {
+          const buttonProps: ButtonProps[] = [
+            {
+              label: "Edit",
+              type: "button",
+              onClickEvent: () => {
+                this.view.renderForm(room);
+              },
             },
-          },
-          {
-            label: "Delete",
-            type: "button",
-            onClickEvent: () => {
-              this.roomService.delete({ name: room.name });
+            {
+              label: "Delete",
+              type: "button",
+              onClickEvent: () => {
+                this.roomService.delete({ name: room.name });
+              },
             },
-          },
-        ];
-        return {
-          row: room,
-          buttonProps,
-        };
+          ];
+          return {
+            row: room,
+            buttonProps,
+          };
+        });
+
+        this.view.renderTableWithButtons(tableWithButtonsProps);
+      })
+      .catch((error) => {
+        this.exceptionService.handle(error);
       });
-
-      this.view.renderTableWithButtons(tableWithButtonsProps);
-    });
   }
 
   public initSubmitButton() {

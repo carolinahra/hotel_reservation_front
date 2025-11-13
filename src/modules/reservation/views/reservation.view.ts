@@ -45,14 +45,15 @@ export class ReservationView {
       };
     });
     const table = this.table.render(propsWithButtons);
-    const docTable = document.getElementById("reservation-table-with-buttons");
-    while (docTable.firstChild) {
-      docTable.removeChild(docTable.firstChild);
-    }
-    docTable.appendChild(table);
+    const div = document.getElementById("app");
+    div.appendChild(table);
   }
 
   public renderForm(reservation?: Reservation) {
+    if (document.getElementById("reservation-form")) {
+      const element = document.getElementById("reservation-form");
+      this.clean(element);
+    }
     const form = this.form.render([
       {
         fieldName: "Guest ID",
@@ -98,11 +99,9 @@ export class ReservationView {
             : "",
       },
     ]);
-    const docForm = document.getElementById("reservation-form-container");
-    while (docForm.firstChild) {
-      docForm.removeChild(docForm.firstChild);
-    }
-    docForm.appendChild(form);
+    form.id = "reservation-form";
+    const div = document.getElementById("app");
+    div.appendChild(form);
   }
 
   public renderSubmitButton(event: () => void) {
@@ -111,9 +110,7 @@ export class ReservationView {
       type: "submit",
       onclickEvent: event,
     });
-    document
-      .getElementById("reservation-form-submit-button")
-      .appendChild(button);
+    document.getElementById("reservation-form").appendChild(button);
   }
 
   public readFormInputs() {
@@ -155,5 +152,16 @@ export class ReservationView {
     };
 
     return inputs;
+  }
+
+  public clean(element?: HTMLElement) {
+    const div = document.getElementById("app");
+    if (element) {
+      div.removeChild(element);
+      return;
+    }
+    while (div.firstChild) {
+      div.removeChild(div.firstChild);
+    }
   }
 }

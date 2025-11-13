@@ -17,10 +17,10 @@ interface CreateGuestConfig {
 }
 
 interface UpdateGuestConfig {
-  phone: string;
+  id: number;
+  phone?: string;
   name?: string;
   email?: string;
-  newPhone?: string;
 }
 
 interface DeleteGuestConfig {

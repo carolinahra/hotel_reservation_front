@@ -1,13 +1,15 @@
 import { ButtonProps } from "@guest/views/guest.view";
 import { RoomSizeService } from "@room/services/room-size.service";
 import { RoomSizeView } from "@room/views/room-size.view";
+import { Controller } from "@shared/controllers/controller";
 
-
-export class RoomSizeController {
+export class RoomSizeController extends Controller {
   constructor(
     private readonly view: RoomSizeView,
     private readonly roomSizeService: RoomSizeService
-  ) {}
+  ) {
+    super();
+  }
 
   public init() {
     return this.roomSizeService

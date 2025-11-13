@@ -20,10 +20,12 @@ interface CreateReservationConfig {
 }
 
 interface UpdateReservationConfig {
+  id: number;
   externalReference: string;
-  paymentStatus?: string;
-  checkInDate?: string;
-  checkoutDate?: string;
+  totalPrice: number;
+  paymentStatus: string;
+  checkInDate: string;
+  checkOutDate: string;
 }
 
 interface DeleteReservationConfig {

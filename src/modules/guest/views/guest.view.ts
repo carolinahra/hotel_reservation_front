@@ -21,16 +21,23 @@ export class GuestView {
   ) {}
 
   public renderTable(guests: Guest[]) {
+    if (document.getElementById("guest-table")) {
+      this.clean(document.getElementById("guest-table"));
+    }
     const tableProps = guests.map((guest) => {
       return {
         row: guest,
       };
     });
     const table = this.table.render(tableProps);
-    document.getElementById("guest-table").appendChild(table);
+    table.id = "guest-table";
+    document.getElementById("app").appendChild(table);
   }
 
   public renderTableWithButtons(props: TableWithButtonProps[]) {
+    if (document.getElementById("guest-table-with-buttons")) {
+      this.clean(document.getElementById("guest-table-with-buttons"));
+    }
     const propsWithButtons = props.map((prop) => {
       const buttons = prop.buttonProps.map((buttonProp) => {
         return this.button.render({
@@ -45,39 +52,39 @@ export class GuestView {
       };
     });
     const table = this.table.render(propsWithButtons);
-    const docTable = document.getElementById("guest-table-with-buttons");
-    while (docTable.firstChild) {
-      docTable.removeChild(docTable.firstChild);
-    }
-    docTable.appendChild(table);
+    table.id = "guest-table-with-buttons";
+    const div = document.getElementById("app");
+    div.appendChild(table);
   }
 
   public renderForm(guest?: Guest) {
+    if (document.getElementById("guest-form")) {
+      const element = document.getElementById("guest-form");
+      this.clean(element);
+    }
     const form = this.form.render([
       {
-        fieldName: "name",
+        fieldName: "Name",
         type: "string",
         id: "guest-name-field",
         value: guest?.name ?? "",
       },
       {
-        fieldName: "email",
+        fieldName: "Email",
         type: "email",
         id: "guest-email-field",
         value: guest?.email ?? "",
       },
       {
-        fieldName: "phone",
+        fieldName: "Phone",
         type: "tel",
         id: "guest-phone-field",
         value: guest?.phone ?? "",
       },
     ]);
-    const docForm = document.getElementById("guest-form-container");
-    while (docForm.firstChild) {
-      docForm.removeChild(docForm.firstChild);
-    }
-    docForm.appendChild(form);
+    form.id = "guest-form";
+    const div = document.getElementById("app");
+    div.appendChild(form);
   }
 
   public renderSubmitButton(event: () => void) {
@@ -86,7 +93,21 @@ export class GuestView {
       type: "submit",
       onclickEvent: event,
     });
-    document.getElementById("guest-form-submit-button").appendChild(button);
+    document.getElementById("guest-form").appendChild(button);
+  }
+
+  public renderCreateNewButton(event: () => void) {
+    if (document.getElementById("create-guest-button")) {
+      this.clean(document.getElementById("create-guest-button"));
+    }
+    const button = this.button.render({
+      label: "Create New Guest",
+      type: "button",
+      onclickEvent: event,
+    });
+    button.id = "create-guest-button";
+
+    document.getElementById("app").appendChild(button);
   }
 
   public readFormInputs() {
@@ -100,5 +121,16 @@ export class GuestView {
     };
 
     return inputs;
+  }
+
+  public clean(element?: HTMLElement) {
+    const div = document.getElementById("app");
+    if (element) {
+      div.removeChild(element);
+      return;
+    }
+    while (div.firstChild) {
+      div.removeChild(div.firstChild);
+    }
   }
 }

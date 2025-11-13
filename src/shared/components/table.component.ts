@@ -9,8 +9,10 @@ export class TableComponent {
     table.className = "table";
     const headers = Object.keys(tableProps[0].row);
     const buttons = tableProps[0].buttons ?? [];
-    for (const button of buttons) {
-      headers.push(button.textContent ?? "");
+    if (buttons.length > 0) {
+      for (const button of buttons) {
+        headers.push(button.textContent ?? "");
+      }
     }
 
     const firstRow = document.createElement("tr");
@@ -32,10 +34,12 @@ export class TableComponent {
       }
 
       const tdButtons = tableProp.buttons;
-      for (const button of tdButtons) {
-        const tdButton = document.createElement("td");
-        tdButton.appendChild(button);
-        row.appendChild(tdButton);
+      if (tdButtons) {
+        for (const button of tdButtons) {
+          const tdButton = document.createElement("td");
+          tdButton.appendChild(button);
+          row.appendChild(tdButton);
+        }
       }
 
       table.appendChild(row);

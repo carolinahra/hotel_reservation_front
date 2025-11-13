@@ -1,23 +1,20 @@
 import { GuestService } from "@guest/services/guest.service";
 import { ButtonProps, GuestView } from "@guest/views/guest.view";
+import { Controller } from "@shared/controllers/controller";
 
-export class GuestController {
+export class GuestController extends Controller {
   constructor(
     private readonly view: GuestView,
     private readonly guestService: GuestService
-  ) {}
-
-  public init() {
-    return this.guestService
-      .get({ limit: 10, offset: 0 })
-      .then((guests) => this.view.renderTable(guests));
+  ) {
+    super();
   }
 
   public initInsertForm() {
     this.view.renderForm();
   }
 
-  public initTableWithButtons() {
+  public init() {
     this.guestService.get({ limit: 10, offset: 0 }).then((guests) => {
       const tableWithButtonsProps = guests.map((guest) => {
         const buttonProps: ButtonProps[] = [
@@ -26,6 +23,17 @@ export class GuestController {
             type: "button",
             onClickEvent: () => {
               this.view.renderForm(guest);
+              this.view.renderSubmitButton(() => {
+                const inputs = this.view.readFormInputs();
+                this.guestService
+                  .update({
+                    id: guest.id,
+                    name: inputs.name,
+                    email: inputs.email,
+                    phone: inputs.phone,
+                  })
+                  .then(() => this.init());
+              });
             },
           },
           {
@@ -43,13 +51,17 @@ export class GuestController {
       });
 
       this.view.renderTableWithButtons(tableWithButtonsProps);
+      this.view.renderCreateNewButton(() => {
+        this.view.renderForm();
+        this.view.renderSubmitButton(() => {
+          const inputs = this.view.readFormInputs();
+          this.guestService.create(inputs);
+        });
+      });
     });
   }
 
-  public initSubmitButton() {
-    this.view.renderSubmitButton(() => {
-      const inputs = this.view.readFormInputs();
-      this.guestService.create(inputs);
-    });
+  public clean() {
+    this.view.clean();
   }
 }
