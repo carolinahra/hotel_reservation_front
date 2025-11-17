@@ -4,6 +4,7 @@ import { ReservationDetailController } from "@reservation/controllers/reservatio
 import { ReservationController } from "@reservation/controllers/reservation.controller";
 import { RoomSizeController } from "@room/controllers/room-size.controlller";
 import { RoomController } from "@room/controllers/room.controller";
+import { BookingController } from "@shared/controllers/booking.controller";
 import { Controller } from "@shared/controllers/controller";
 
 export type Routes = {
@@ -22,7 +23,8 @@ export class Router {
     private readonly roomSizeController: RoomSizeController,
     private readonly reservationController: ReservationController,
     private readonly reservationDetailController: ReservationDetailController,
-    private readonly extraServiceController: ExtraServiceController
+    private readonly extraServiceController: ExtraServiceController,
+    private readonly bookingController: BookingController
   ) {
     this.routes = {
       guests: this.guestController,
@@ -31,6 +33,7 @@ export class Router {
       reservations: this.reservationController,
       reservationDetails: this.reservationDetailController,
       extraServices: this.extraServiceController,
+      booking: this.bookingController,
     };
   }
   handle() {

@@ -20,10 +20,13 @@ import { ButtonComponent } from "@shared/components/button.component";
 import { ErrorMessageComponent } from "@shared/components/error-message.component";
 import { FormComponent } from "@shared/components/form.component";
 import { TableComponent } from "@shared/components/table.component";
+import { BookingController } from "@shared/controllers/booking.controller";
 import { ExceptionController } from "@shared/controllers/exception.controller";
 import { Router, Routes } from "@shared/router/router";
+import { BookingService } from "@shared/services/booking.service";
 import { ExceptionService } from "@shared/services/exception.service";
 import { HTTPService, HTTPConfig } from "@shared/services/http.service";
+import { BookingView } from "@shared/views/booking.view";
 import { ExceptionView } from "@shared/views/exception.view";
 
 interface ContainerProps {
@@ -53,6 +56,9 @@ interface ContainerProps {
   extraServiceView?: ExtraServiceView;
   extraServiceService?: ExtraServiceService;
   extraServiceController?: ExtraServiceController;
+  bookingView?: BookingView;
+  bookingService?: BookingService;
+  bookingController?: BookingController;
   router?: Router;
 }
 interface ContainerConfig {
@@ -319,6 +325,37 @@ export class Container {
     return this.props.extraServiceController;
   }
 
+  get bookingView() {
+    if (this.props.bookingView) {
+      return this.props.bookingView;
+    }
+    this.props.bookingView = new BookingView(
+      this.formComponent,
+      this.buttonComponent
+    );
+    return this.props.bookingView;
+  }
+
+  get bookingService() {
+    if (this.props.bookingService) {
+      return this.props.bookingService;
+    }
+    this.props.bookingService = new BookingService(this.httpService);
+    return this.props.bookingService;
+  }
+
+  get bookingController() {
+    if (this.props.bookingController) {
+      return this.props.bookingController;
+    }
+    this.props.bookingController = new BookingController(
+      this.extraServiceController,
+      this.bookingView,
+      this.bookingService
+    );
+    return this.props.bookingController;
+  }
+
   get router() {
     if (this.props.router) {
       return this.props.router;
@@ -330,7 +367,8 @@ export class Container {
       this.roomSizeController,
       this.reservationController,
       this.reservationDetailController,
-      this.extraServiceController
+      this.extraServiceController,
+      this.bookingController
     );
     return this.props.router;
   }

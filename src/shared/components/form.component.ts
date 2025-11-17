@@ -3,6 +3,7 @@ interface FormProps {
   type: string;
   id: string;
   value?: string;
+  class?: string;
 }
 
 export class FormComponent {
@@ -19,6 +20,7 @@ export class FormComponent {
       input.name = inputField.fieldName;
       input.type = inputField.type;
       input.value = inputField.value != null ? inputField.value : "";
+      input.className = inputField.class != null ? inputField.class : "";
       input.id = inputField.id;
 
       const div = document.createElement("div");

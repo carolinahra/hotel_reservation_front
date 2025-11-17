@@ -30,7 +30,7 @@ export class ExtraServiceService {
     getStudentConfig: GetExtraServiceConfig
   ): Promise<ExtraService | ExtraService[]> {
     return this.httpService
-      .get<ExtraService[]>("extraServices", getStudentConfig)
+      .get<ExtraService[]>("extra-services", getStudentConfig)
       .then((extraServices) =>
         extraServices.map((extraService) => new ExtraService(extraService))
       );
@@ -38,19 +38,19 @@ export class ExtraServiceService {
 
   create(createextraServiceConfig: CreateExtraServiceConfig) {
     return this.httpService
-      .post<ExtraService>("extraServices", createextraServiceConfig)
+      .post<ExtraService>("extra-services", createextraServiceConfig)
       .then((extraService) => new ExtraService(extraService));
   }
 
   update(updateextraServiceConfig: UpdateExtraServiceConfig) {
     return this.httpService
-      .put<ExtraService>("extraServices", updateextraServiceConfig)
+      .put<ExtraService>("extra-services", updateextraServiceConfig)
       .then((extraService) => new ExtraService(extraService));
   }
 
   delete(deleteextraServiceConfig: DeleteExtraServiceConfig): Promise<boolean> {
     return this.httpService.delete<boolean>(
-      "extraServices",
+      "extra-services",
       deleteextraServiceConfig
     );
   }

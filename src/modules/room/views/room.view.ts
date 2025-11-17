@@ -31,6 +31,10 @@ export class RoomView {
   }
 
   public renderTableWithButtons(props: TableWithButtonProps[]) {
+    if (document.getElementById("room-table")) {
+      const element = document.getElementById("room-table");
+      this.clean(element);
+    }
     const propsWithButtons = props.map((prop) => {
       const buttons = prop.buttonProps.map((buttonProp) => {
         return this.button.render({
@@ -45,6 +49,7 @@ export class RoomView {
       };
     });
     const table = this.table.render(propsWithButtons);
+    table.id = "room-table";
     const div = document.getElementById("app");
     div.appendChild(table);
   }
@@ -65,7 +70,7 @@ export class RoomView {
         fieldName: "Room Size Id",
         type: "string",
         id: "room-room-size-id-field",
-        value: room?.roomSizeId != null ? String(room.roomSizeId) : "",
+        value: room?.room_size_id != null ? String(room.room_size_id) : "",
       },
       {
         fieldName: "Price",

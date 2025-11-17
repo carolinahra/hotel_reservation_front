@@ -21,6 +21,14 @@ export class ExtraServiceController extends Controller {
     this.view.renderForm();
   }
 
+  public initExtraServiceOptions(formId: string) {
+    this.extraServiceService
+      .get({ limit: 20, offset: 0 })
+      .then((extraServices) =>
+        this.view.renderExtraServiceOptions(extraServices, formId)
+      );
+  }
+
   public initTableWithButtons() {
     this.extraServiceService
       .get({ limit: 10, offset: 0 })

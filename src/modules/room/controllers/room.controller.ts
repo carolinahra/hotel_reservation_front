@@ -33,6 +33,14 @@ export class RoomController extends Controller {
                 this.roomService.delete({ name: room.name });
               },
             },
+            {
+              label: "Book",
+              type: "button",
+              onClickEvent: () => {
+                sessionStorage.setItem("bookingRoomId", String(room.id));
+                window.location.hash = "#/booking";
+              },
+            },
           ];
           return {
             row: room,

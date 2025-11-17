@@ -11,10 +11,10 @@ const container = new Container({
     "reservations",
     "reservationDetails",
     "extraServices",
+    "reservation"
   ],
 });
 
-const guestController = container.guestController;
 const router = container.router;
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -8,6 +8,6 @@ export class ExceptionController {
   constructor(private readonly exceptionService: ExceptionService) {}
 
   public init(errorResponse: ErrorResponse) {
-    return this.exceptionService.render(errorResponse);
+    return this.exceptionService.handle(errorResponse);
   }
 }

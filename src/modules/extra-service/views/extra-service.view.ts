@@ -54,6 +54,30 @@ export class ExtraServiceView {
     docTable.appendChild(table);
   }
 
+  public renderExtraServiceOptions(
+    extraServices: ExtraService[],
+    formId: string
+  ) {
+    if (document.getElementById("extra-service-options")) {
+      const element = document.getElementById("extra-service-options");
+      this.clean(element);
+    }
+
+    const formProps = extraServices.map((extraService) => {
+      return {
+        fieldName: extraService.name,
+        type: "checkbox",
+        id: `extra-service-${extraService.id}-field`,
+        value: extraService.id.toString(),
+        class: "extra-service-option",
+      };
+    });
+    const form = this.form.render(formProps);
+    form.id = "extra-service-options";
+    const div = document.getElementById(formId);
+    div.appendChild(form);
+  }
+
   public renderForm(extraService?: ExtraService) {
     const form = this.form.render([
       {
@@ -92,13 +116,6 @@ export class ExtraServiceView {
       name: (
         document.getElementById("extra-service-name-field") as HTMLInputElement
       ).value,
-      extraServiceSizeId: Number(
-        (
-          document.getElementById(
-            "extra-service-extraService-size-id-field"
-          ) as HTMLInputElement
-        ).value
-      ),
       price: Number(
         (
           document.getElementById(
@@ -109,5 +126,16 @@ export class ExtraServiceView {
     };
 
     return inputs;
+  }
+
+  public clean(element?: HTMLElement) {
+    const div = document.getElementById("app");
+    if (element) {
+      div.removeChild(element);
+      return;
+    }
+    while (div.firstChild) {
+      div.removeChild(div.firstChild);
+    }
   }
 }
