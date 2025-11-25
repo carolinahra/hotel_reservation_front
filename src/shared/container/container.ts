@@ -351,7 +351,8 @@ export class Container {
     this.props.bookingController = new BookingController(
       this.extraServiceController,
       this.bookingView,
-      this.bookingService
+      this.bookingService,
+      this.exceptionController
     );
     return this.props.bookingController;
   }

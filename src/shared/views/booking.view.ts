@@ -60,6 +60,44 @@ export class BookingView {
     return inputs;
   }
 
+  public bindPriceCalculation(callback: () => void): void {
+    const checkIn = document.getElementById(
+      "booking-checkin-field"
+    ) as HTMLInputElement;
+    const checkOut = document.getElementById(
+      "booking-checkout-field"
+    ) as HTMLInputElement;
+    const extraServicesForm = document.getElementById(
+      "extra-service-options"
+    ) as HTMLFormElement;
+    const tryRecalculate = () => {
+      if (!checkIn?.value || !checkOut?.value) return;
+      callback();
+    };
+    checkIn?.addEventListener("change", tryRecalculate);
+    checkOut?.addEventListener("change", tryRecalculate);
+    extraServicesForm?.addEventListener("change", (event) => {
+      const target = event.target as HTMLInputElement;
+      const input = target.closest(
+        "input.extra-service-option"
+      ) as HTMLInputElement;
+      if (input) {
+        tryRecalculate();
+      }
+    });
+  }
+
+  public renderPrice(price: number) {
+    let priceElement = document.getElementById("booking-price");
+    if (!priceElement) {
+      priceElement = document.createElement("div");
+      priceElement.id = "booking-price";
+      const form = document.getElementById("booking-form");
+      form.appendChild(priceElement);
+    }
+    priceElement.textContent = `Total price: ${price}`;
+  }
+
   public clean(element?: HTMLElement) {
     const div = document.getElementById("app");
     if (element) {

@@ -21,15 +21,15 @@ export class ExtraServiceController extends Controller {
     this.view.renderForm();
   }
 
-  public initExtraServiceOptions(formId: string) {
-    this.extraServiceService
+  public initExtraServiceOptions(formId: string): Promise<void> {
+    return this.extraServiceService
       .get({ limit: 20, offset: 0 })
       .then((extraServices) =>
         this.view.renderExtraServiceOptions(extraServices, formId)
       );
   }
 
-  public initTableWithButtons() {
+  public initTableWithButtons() { 
     this.extraServiceService
       .get({ limit: 10, offset: 0 })
       .then((extraServices) => {

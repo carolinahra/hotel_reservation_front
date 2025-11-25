@@ -65,7 +65,7 @@ export class ExtraServiceView {
 
     const formProps = extraServices.map((extraService) => {
       return {
-        fieldName: extraService.name,
+        fieldName: `${extraService.name}   - ${extraService.price} € / day`,
         type: "checkbox",
         id: `extra-service-${extraService.id}-field`,
         value: extraService.id.toString(),
