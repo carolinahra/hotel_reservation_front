@@ -17,8 +17,10 @@ import { RoomService } from "@room/services/room.service";
 import { RoomSizeView } from "@room/views/room-size.view";
 import { RoomView } from "@room/views/room.view";
 import { ButtonComponent } from "@shared/components/button.component";
+import { DropDownComponent } from "@shared/components/dropdown.component";
 import { ErrorMessageComponent } from "@shared/components/error-message.component";
 import { FormComponent } from "@shared/components/form.component";
+import { PaginationComponent } from "@shared/components/pagination.component";
 import { TableComponent } from "@shared/components/table.component";
 import { BookingController } from "@shared/controllers/booking.controller";
 import { ExceptionController } from "@shared/controllers/exception.controller";
@@ -36,7 +38,9 @@ interface ContainerProps {
   tableComponent?: TableComponent;
   buttonComponent?: ButtonComponent;
   formComponent?: FormComponent;
+  dropDownComponent?: DropDownComponent;
   errorMessageComponent?: ErrorMessageComponent;
+  paginationComponent?: PaginationComponent;
   guestService?: GuestService;
   reservationView?: ReservationView;
   reservationService?: ReservationService;
@@ -158,6 +162,24 @@ export class Container {
     return this.props.buttonComponent;
   }
 
+  get paginationComponent() {
+    if (this.props.paginationComponent) {
+      return this.props.paginationComponent;
+    }
+    this.props.paginationComponent = new PaginationComponent(
+      this.buttonComponent
+    );
+    return this.props.paginationComponent;
+  }
+
+  get dropDownComponent() {
+    if (this.props.dropDownComponent) {
+      return this.props.dropDownComponent;
+    }
+    this.props.dropDownComponent = new DropDownComponent();
+    return this.props.dropDownComponent;
+  }
+
   get guestView() {
     if (this.props.guestView) {
       return this.props.guestView;
@@ -165,7 +187,9 @@ export class Container {
     this.props.guestView = new GuestView(
       this.tableComponent,
       this.formComponent,
-      this.buttonComponent
+      this.buttonComponent,
+      this.paginationComponent,
+      this.dropDownComponent
     );
     return this.props.guestView;
   }

@@ -191,3 +191,79 @@ button:disabled {
   background-color: #b0bec5;
   cursor: not-allowed;
 }
+/* =========================
+   CONTENEDOR PAGINACIÓN
+   ========================= */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0;
+  padding: 10px 14px;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+}
+
+/* =========================
+   BOTONES DE PAGINACIÓN
+   ========================= */
+.pagination button {
+  padding: 6px 12px;
+  border: none;
+  background-color: #555555; /* gris oscuro */
+  color: #ffffff; /* texto/flechas blancas */
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.pagination button:hover {
+  background-color: #444444;
+}
+
+.pagination button:active {
+  background-color: #333333;
+}
+
+.pagination button:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+/* =========================
+   INPUTS
+   ========================= */
+.pagination input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Quitar flechas en Chrome / Edge */
+.pagination input[type="number"]::-webkit-inner-spin-button,
+.pagination input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* =========================
+   TEXTO AUXILIAR
+   ========================= */
+.pagination .pagination-text {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* =========================
+   SEPARADOR VISUAL
+   ========================= */
+.pagination .separator {
+  margin: 0 6px;
+  color: #666;
+}

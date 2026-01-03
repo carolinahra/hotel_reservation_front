@@ -47,7 +47,7 @@ export class BookingView {
       (extraServiceInput) => Number(extraServiceInput.value)
     );
     const inputs = {
-      guestId: 1,
+      guestId: 5,
       roomsId: [Number(sessionStorage.getItem("bookingRoomId"))],
       extraServiceIds,
       checkInDate: (

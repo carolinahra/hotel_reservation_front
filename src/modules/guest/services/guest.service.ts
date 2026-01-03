@@ -8,6 +8,7 @@ interface GetGuestConfig {
   email?: string;
   limit?: number;
   offset?: number;
+  filter?: boolean;
 }
 
 interface CreateGuestConfig {
@@ -29,8 +30,7 @@ interface DeleteGuestConfig {
 }
 export class GuestService {
   constructor(private readonly httpService: HTTPService) {}
-  get({ limit, offset }): Promise<Guest[]>;
-  get(getStudentConfig: GetGuestConfig): Promise<Guest | Guest[]> {
+  get(getStudentConfig: GetGuestConfig): Promise<Guest[]> {
     return this.httpService
       .get<Guest[]>("guests", getStudentConfig)
       .then((guests) => guests.map((guest) => new Guest(guest)));
