@@ -268,5 +268,3 @@ export class GuestController extends Controller {
     this.view.clean();
   }
 }
-
-// TODO: FIltros. Hacer un desplegable para filtrar por nombre, correo, etc. En backend hacer nuevo get que permita filtrar (WHERE name LIKE props.name)
